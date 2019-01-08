@@ -1,26 +1,24 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { createGlobalStyle} from 'styled-components';
+import BuyerApp from './buyer/buyerApp';
+
+const GlobalStyle = createGlobalStyle`
+  body {
+    background-color:#f4f5f8;
+  }
+  p,h1,h2,h3,h4,h5{
+    margin:0;
+  }
+`;
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+        <div>
+          <GlobalStyle />
+            <BuyerApp />
+        </div>
     );
   }
 }

@@ -4,23 +4,7 @@ import {ProjectList} from "./projectList";
 import SelfSearchBar from "../../component-library/selfSearchBar/selfSearchBar";
 import Select from 'react-select';
 import styled from 'styled-components';
-
-//data
-const sampleProjectInfo = {
-    "id":"1",
-    "projectName": "building marketplace for self-employed",
-    "postTime": new Date(),
-    "expiredTime": new Date(2019,1,9),
-    "description": "Assume all projects can be done remotely/online. You do not need to worry about matching by location. The Buyer with the lowest bid automatically wins the bid when the deadline is reached. Lowest bid is displayed on the project page.",
-    "paymentType": "fix",
-    "basePayment": 10000,
-    "currentBid": 10000,
-    "bidders":["a","n","c"],
-    "bidNum":3,
-    "sold":false,
-    "sellerInfo": null,
-    "buyerInfo": null
-};
+import {api} from "../../services/api";
 
 //config
 const sortOptions = [{
@@ -59,35 +43,14 @@ class BuyerHomeView extends Component {
         };
         this.handleSearchTextChange = this.handleSearchTextChange.bind(this);
         this.handleSelectOptionChange = this.handleSelectOptionChange.bind(this);
+        this.handleSubmitBid = this.handleSubmitBid.bind(this);
     }
 
     componentDidMount() {
-        this.setState({allProjectInfo:this.fetchData()});
+        const data = api.fetchRecentProjects();
+        this.setState({allProjectInfo:data});
     }
 
-    fetchData() {
-        return this.generateAllProjectInfo(sampleProjectInfo);
-    }
-
-    //generate initial data of all project info
-    generateAllProjectInfo(sampleProjectInfo) {
-        let size = 5;
-        let result = [];
-        const testMapping = ["Java Developer","JavaScript Developer","UX Designer","Test Engineer"]
-        while (size>0) {
-            result.push(Object.assign({},sampleProjectInfo,{
-                id:size,
-                basePayment:10*size,
-                currentBid:10*size,
-                paymentType: size%2 === 0?"fix":"hourly",
-                projectName:`${sampleProjectInfo.projectName} - ${testMapping[size%4]}`,
-                postTime:new Date(2018,size%3,size),
-                expiredTime:new Date(2019,size%4,28-size)
-            }));
-            size--;
-        }
-        return result;
-    };
 
     handleSearchTextChange(value) {
         this.setState({searchText:value});
@@ -97,13 +60,20 @@ class BuyerHomeView extends Component {
         this.setState({selectedOption: selectedOption});
     }
 
+    handleSubmitBid(projectId) {
+        this.setState((preState) => {
+            let copy = preState.allProjectInfo.slice(0);
+            return {allProjectInfo:copy.filter(project => project.id !== projectId)};
+        });
+    }
+
     render() {
         return <MainView title="Find a project">
             <FlexWrap>
             <SelfSearchBar selfSearchBarStyle={selfSearchBarStyle} placeholder="Search Projects" searchText={this.state.searchText} onChange={this.handleSearchTextChange}/>
                 <FlexItem><Select options={sortOptions} value={this.state.selectedOption} onChange={this.handleSelectOptionChange} /></FlexItem>
             </FlexWrap>
-            <ProjectList projects={this.state.allProjectInfo} cardConfig={{cardType:"bidCard"}} searchText={this.state.searchText} sortingType={this.state.selectedOption.value} />
+            <ProjectList onSubmitBid={this.handleSubmitBid} projects={this.state.allProjectInfo} cardConfig={{cardType:"bidCard"}} searchText={this.state.searchText} sortingType={this.state.selectedOption.value} />
         </MainView>
     }
 }

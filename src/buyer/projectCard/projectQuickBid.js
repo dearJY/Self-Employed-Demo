@@ -3,7 +3,9 @@ import styled from 'styled-components';
 import {SelfButton} from "../../component-library/selfButton/SelfButton";
 import SelfInputBox from "../../component-library/selfInputBox/selfInputBox";
 import {SelfTag} from "../../component-library/selfTag/selfTag";
+import {api} from "../../services/api";
 
+//Styling
 const BasicDiv = styled.div`
     margin:10px;
 `;
@@ -24,6 +26,8 @@ const BidInputWrap = styled.div`
     text-align:center;
 `;
 
+
+//Component
 class ProjectQuickBid extends Component {
     constructor(props) {
         super(props);
@@ -39,7 +43,13 @@ class ProjectQuickBid extends Component {
     }
 
     handleSubmit() {
-        this.props.onCurrentBidChange(this.state.inputValue);
+        if (this.state.inputValue>=this.props.currentBid) {
+            alert(`you should enter price greater than ${this.props.currentBid}`);
+            return;
+        }
+        const addNewBidAlert = api.addNewBidToProject(this.props.projectId,"u1",this.state.inputValue);
+        alert(addNewBidAlert);
+        this.props.onCurrentBidChange();
     }
 
 

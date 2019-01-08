@@ -17,10 +17,6 @@ const StyledHeader = styled.p`
     margin:10px;
 `;
 
-const SubContainer = styled.div`
-    overflow:scroll;
-`;
-
 export const Container = (props) => {
     const headerText = props.headerText;
     const containerConfig = props.containerConfig;

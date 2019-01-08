@@ -34,7 +34,7 @@ export const LeftNavBar = () => {
     return <LeftNavBarContainer>
         <StyledUL>
             <li><StyledLink to="/">Home</StyledLink></li>
-            <li><StyledLink to="/dashboard">Your Actions</StyledLink></li>
+            <li><StyledLink to="/dashboard">Dashboard</StyledLink></li>
         </StyledUL>
     </LeftNavBarContainer>
 };

@@ -2,6 +2,7 @@ import React from 'react';
 import {Container} from "../../component-library/container/container";
 import ProjectCard from "../projectCard/projectCard"
 
+//service
 function sortingService(dataList,sortingType) {
 
     if (sortingType === "postTime" || sortingType === "expiredTime") {
@@ -14,6 +15,7 @@ function sortingService(dataList,sortingType) {
     return dataList;
 }
 
+//Component
 export const ProjectList = (props) => {
     const searchText = props.searchText || "";
 
@@ -21,10 +23,10 @@ export const ProjectList = (props) => {
     let sortedProjects = sortingService(props.projects.slice(0),props.sortingType);
     let projectCards = [];
     sortedProjects.forEach((projectInfo) => {
-        if (projectInfo.projectName.indexOf(searchText) === -1) {
+        if (projectInfo.projectName.toLowerCase().indexOf(searchText.toLowerCase()) === -1) {
             return;
         }
-        projectCards.push(<ProjectCard projectInfo={projectInfo} cardConfig={props.cardConfig} key={projectInfo.id}/>)
+        projectCards.push(<ProjectCard projectInfo={projectInfo} cardConfig={props.cardConfig} key={projectInfo.id} onSubmitBid={props.onSubmitBid}/>)
     });
 
     return (

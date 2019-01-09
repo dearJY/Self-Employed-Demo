@@ -43,8 +43,12 @@ class ProjectQuickBid extends Component {
     }
 
     handleSubmit() {
+        if (!this.state.inputValue) {
+            alert(`Please enter some price`);
+            return;
+        }
         if (this.state.inputValue>=this.props.projectInfo.currentBid) {
-            alert(`you should enter price greater than ${this.props.projectInfo.currentBid}`);
+            alert(`you should enter price less than ${this.props.projectInfo.currentBid}`);
             return;
         }
         const addNewBidAlert = api.addNewBidToProject(this.props.projectInfo.projectId,"u1",this.state.inputValue);

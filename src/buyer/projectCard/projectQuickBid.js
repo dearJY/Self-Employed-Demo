@@ -43,11 +43,11 @@ class ProjectQuickBid extends Component {
     }
 
     handleSubmit() {
-        if (this.state.inputValue>=this.props.currentBid) {
-            alert(`you should enter price greater than ${this.props.currentBid}`);
+        if (this.state.inputValue>=this.props.projectInfo.currentBid) {
+            alert(`you should enter price greater than ${this.props.projectInfo.currentBid}`);
             return;
         }
-        const addNewBidAlert = api.addNewBidToProject(this.props.projectId,"u1",this.state.inputValue);
+        const addNewBidAlert = api.addNewBidToProject(this.props.projectInfo.projectId,"u1",this.state.inputValue);
         alert(addNewBidAlert);
         this.props.onCurrentBidChange();
     }
@@ -56,8 +56,8 @@ class ProjectQuickBid extends Component {
     render() {
         return <ProjectQuickBidContainer>
             <BasicDiv>
-                <h1>{`${this.props.currentBid}${this.props.paymentType === "hourly"?"/hr":""}`}</h1>
-                <PaymentType>{this.props.paymentType === "fix"?"Fixed Price":"Hourly"}</PaymentType>
+                <h1>{`${this.props.projectInfo.currentBid}${this.props.projectInfo.paymentType === "hourly"?"/hr":""}`}</h1>
+                <PaymentType>{this.props.projectInfo.paymentType === "fix"?"Fixed Price":`Hourly | ${this.props.projectInfo.workingHours} hrs`}</PaymentType>
             </BasicDiv>
             {this.props.cardConfig.cardType === "bidCard"?
                 <BidInputWrap>

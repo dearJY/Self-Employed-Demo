@@ -34,12 +34,12 @@ const cardConfigs = {
 };
 
 //Service
-function getUserTotalEarning(projects) {
+export function getUserTotalEarning(projects) {
     return projects.reduce((acc,project) => {
         if (project.paymentType === "hourly") {
-            return acc + project.currentBid*project.workingHours;
+            return acc + parseInt(project.currentBid)*parseInt(project.workingHours);
         } else {
-            return acc + project.currentBid;
+            return acc + parseInt(project.currentBid);
         }
     },0)
 }

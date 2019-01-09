@@ -27,7 +27,7 @@ class ProjectCard extends Component {
     render() {
         return <StyledProjectCard>
             <ProjectInfo projectInfo={this.props.projectInfo} />
-            <ProjectQuickBid projectId={this.props.projectInfo.id} currentBid={this.props.projectInfo.currentBid} paymentType = {this.props.projectInfo.paymentType} cardConfig={this.props.cardConfig} onCurrentBidChange={this.updateFn} />
+            <ProjectQuickBid projectInfo={this.props.projectInfo} cardConfig={this.props.cardConfig} onCurrentBidChange={this.updateFn} />
          </StyledProjectCard>
     }
 }

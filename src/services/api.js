@@ -6,7 +6,7 @@ import {projectInfo,userInfo} from "./staticData";
 const testMapping = ["Java Developer","JavaScript Developer","UX Designer","Test Engineer", "Backend Engineer", "Frontend Engineer"];
 const userNameMapping = ["John","Chris","Mary","Emma"];
 
-//Helper funcions
+//Helper functions
 
 //randomly generate a list of project info
 function generateProjects(sampleProjectInfo,size) {
